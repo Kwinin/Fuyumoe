@@ -7,9 +7,8 @@ export class AuthService {
         private readonly adminService: AdminService,
     ) {
     }
-
-    async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.adminService.login(username, password);
+    async validateUser(account: string, password: string): Promise<any> {
+        const user = await this.adminService.login(account, password);
         return user;
     }
 }

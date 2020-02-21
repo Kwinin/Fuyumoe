@@ -2,8 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs'
 import { AdminModel } from './admin.entity';
 import { isEmail } from '../helper/functions';
+import * as config from 'config'
+import { redis } from '../database/redis.db';
+
 interface ISessionInfo {
-  adminId: number
+  id: number
   email: string
   phone: string
 }
@@ -68,9 +71,15 @@ export class AdminService {
       user = await this.adminRepository.findByPk(user)
     }
     return {
-      adminId: user.id,
+      id: user.id,
       phone: user.phone,
       email: user.email,
     }
+  }
+
+  async logout(sessionId) {
+    const redisConfig = config.get('redis')
+    const redisKey = `${redisConfig.prefix}${sessionId}`
+    await redis.del(redisKey)
   }
 }

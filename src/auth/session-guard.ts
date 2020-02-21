@@ -4,10 +4,8 @@ export class SessionGuard implements CanActivate {
     public canActivate(context: ExecutionContext): boolean | Promise<boolean> {
         const httpContext = context.switchToHttp();
         const request = httpContext.getRequest();
-
         try {
-            console.log(1312, request.session.passport)
-            if (request.session.passport.user) {
+            if (request.session.admin) {
                 return true;
             }
         } catch (e) {
