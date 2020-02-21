@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Body, Controller, Get, Post, Req, Request, UseGuards } from '@nestjs/common';
+import { SessionAuthGuard } from './auth/session-auth-guard';
+import { SessionGuard } from './auth/session-guard';
 
-@Controller()
+@Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  @UseGuards(SessionAuthGuard)
+  @Post('login')
+  public async login(@Body() body, @Req() req) {
+    return 'login';
+  }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseGuards(SessionGuard)
+  @Get('me')
+  public getProfile(@Request() req) {
+    return req.user;
   }
 }

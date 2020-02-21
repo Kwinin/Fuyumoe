@@ -11,5 +11,6 @@ import { adminProviders } from './admin.provide';
     AdminService,
     ...adminProviders,
   ],
-  exports: [...adminProviders]})
+  exports: [...adminProviders, AdminService]
+})
 export class AdminModule {}

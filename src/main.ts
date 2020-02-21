@@ -1,8 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as passport from 'passport';
+// import { SessionStore } from './auth/session-store';
+import * as Redis from 'ioredis'
+import * as config from 'config'
+import * as session from 'express-session'
+import * as connectRedis from 'connect-redis'
 
-async function bootstrap() {
+
+
+async function main() {
   const app = await NestFactory.create(AppModule);
+  // const sessionStore = app.get(SessionStore);
+  const redisStore = connectRedis(session)
+  const redisConfig = config.get('redis')
+  const sessionConfig = config.get('session')
+  const client = new Redis(redisConfig)
+  app.use(session(
+    Object.assign({
+        store: new redisStore(Object.assign(
+          {client}, redisConfig
+          )
+        )},
+      sessionConfig,
+    )
+  ))
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   await app.listen(3000);
 }
-bootstrap();
+
+main();

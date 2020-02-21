@@ -10,7 +10,7 @@ export enum EnumEnableType {
   freezeTableName: true,
   timestamps: true,
 })
-export class Admin extends Model<Admin> {
+export class AdminModel extends Model<AdminModel> {
   @Column({ type: INTEGER,
       autoIncrement: true,
       allowNull: false,

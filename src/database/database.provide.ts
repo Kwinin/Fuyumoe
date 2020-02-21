@@ -1,7 +1,7 @@
 
 import { Sequelize } from 'sequelize-typescript';
 import { Article } from '../article/article.entity';
-import { Admin } from '../admin/admin.entity';
+import { AdminModel } from '../admin/admin.entity';
 
 export const databaseProviders = [
   {
@@ -15,7 +15,7 @@ export const databaseProviders = [
         password: '123456',
         database: 'community',
       });
-      sequelize.addModels([Article, Admin]);
+      sequelize.addModels([Article, AdminModel]);
       await sequelize.sync({
         alter: true,
         force: false,
