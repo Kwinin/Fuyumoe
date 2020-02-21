@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards, Request} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { SessionGuard } from '../auth/session-guard';
 
@@ -12,8 +12,8 @@ export class ArticleController {
 
   @UseGuards(SessionGuard)
   @Post('add')
-  add(@Body() data){
-    return this.articleService.add(data)
+  add(@Request() req){
+    return this.articleService.add({...req.body, adminId: req.session.admin.id})
   }
 
   @Get('getById')
