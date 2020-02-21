@@ -6,11 +6,18 @@ import * as Redis from 'ioredis'
 import * as config from 'config'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
+import { join } from "path";
+import * as exphbs from "express-handlebars";
 
 
 
 async function main() {
   const app = await NestFactory.create(AppModule);
+
+  // const viewsPath = join(__dirname, '../public/views');
+  // app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
+  // app.set('views', viewsPath);
+  // app.set('view engine', '.hbs');
   // const sessionStore = app.get(SessionStore);
   const redisStore = connectRedis(session)
   const redisConfig = config.get('redis')
