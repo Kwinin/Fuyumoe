@@ -12,11 +12,11 @@ export class AppController {
         cb(null, path.join(__dirname, '../public/uploads'));
       },
       filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, `${new Date().getTime()}-${file.originalname}`);
       },
     }),
   }))
-  async uploade(@UploadedFiles() files) {
+  async upload(@UploadedFiles() files) {
     console.log(files)
     return files;
   }
