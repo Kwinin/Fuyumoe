@@ -7,8 +7,21 @@ import * as config from 'config'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 import { HttpExceptionFilter } from './common/filters/httpException';
+function normalizePort(val) {
+  const port = parseInt(val, 10);
 
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
 
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
 
 async function main() {
   const app = await NestFactory.create(AppModule);
@@ -34,7 +47,7 @@ async function main() {
   app.use(passport.initialize());
   app.use(passport.session());
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(3000);
+  const port = normalizePort(process.env.PORT || '3000');
+  await app.listen(port);
 }
-
 main();
