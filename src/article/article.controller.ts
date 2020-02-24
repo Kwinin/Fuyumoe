@@ -17,7 +17,7 @@ export class ArticleController {
   }
 
   @Get('getById')
-  getById(@Query() id) {
+  getById(@Query('id') id) {
     return this.articleService.getById(id)
   }
 

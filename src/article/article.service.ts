@@ -15,7 +15,7 @@ export class ArticleService {
     return article
   }
 
-  async getById(id: number): Promise<Article> {
+  async getById(id): Promise<Article> {
     const article = await this.articleRepository.findByPk(id)
     return article
   }
