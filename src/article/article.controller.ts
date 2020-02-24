@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Post, Query, UseGuards, Request, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UseGuards,
+  Request,
+  UseFilters,
+  Delete,
+  Param,
+  Patch,
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { SessionGuard } from '../auth/session-guard';
 
@@ -21,4 +33,15 @@ export class ArticleController {
     return this.articleService.getById(id)
   }
 
+  @UseGuards(SessionGuard)
+  @Delete('del')
+  remove(@Query('id') id){
+    return this.articleService.delById(id)
+  }
+
+  @UseGuards(SessionGuard)
+  @Patch('update')
+  update(@Body() data){
+    return this.articleService.updateById(data)
+  }
 }
