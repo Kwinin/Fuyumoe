@@ -1,9 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs'
 import { AdminModel } from './admin.entity';
 import { isEmail } from '../helper/functions';
 import * as config from 'config'
 import { redis } from '../database/redis.db';
+import { ApiException } from '../common/exceptions/api.exception';
+import { ApiErrorCode } from '../common/enums/error_code';
 
 interface ISessionInfo {
   id: number
@@ -52,11 +54,10 @@ export class AdminService {
   async login(emailOrPhone: string, password: string) {
     const admin = await this.getByAccount(emailOrPhone)
     if (!admin) {
-      return null
+      throw new ApiException('can not found this account', ApiErrorCode.USER_ID_INVALID, HttpStatus.BAD_REQUEST);
     }
     if (!await AdminService.isPasswordCorrect(admin, password)) {
-      console.log({status: 200, message: 'wrong password', code: 10002, type: 'admin'})
-      return null
+      throw new ApiException('wrong password', ApiErrorCode.USER_PASS_INVALID, HttpStatus.BAD_REQUEST);
     }
     return {
       id: admin.id,

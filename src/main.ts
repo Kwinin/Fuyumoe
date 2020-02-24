@@ -6,8 +6,7 @@ import * as Redis from 'ioredis'
 import * as config from 'config'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
-import { join } from "path";
-import * as exphbs from "express-handlebars";
+import { HttpExceptionFilter } from './common/filters/httpException';
 
 
 
@@ -34,7 +33,7 @@ async function main() {
   ))
   app.use(passport.initialize());
   app.use(passport.session());
-
+  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(3000);
 }
 
