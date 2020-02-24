@@ -6,8 +6,8 @@ import { SessionGuard } from '../auth/session-guard';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
   @Get('list')
-  getList() {
-    return this.articleService.getList();
+  getList(@Query('pageSize') pageSize, @Query('pageNumber') pageNumber) {
+    return this.articleService.getListByPage(pageSize, pageNumber);
   }
 
   @UseGuards(SessionGuard)
