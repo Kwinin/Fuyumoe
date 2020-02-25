@@ -19,7 +19,6 @@ export class AppController {
     }),
   }))
   async upload(@UploadedFiles() files) {
-    console.log(files)
     return files;
   }
 }

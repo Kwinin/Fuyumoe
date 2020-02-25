@@ -7,6 +7,8 @@ import * as config from 'config'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 import { HttpExceptionFilter } from './common/filters/httpException';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as fs from 'fs';
 function normalizePort(val) {
   const port = parseInt(val, 10);
 
@@ -24,7 +26,7 @@ function normalizePort(val) {
 }
 
 async function main() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: ['log', 'error', 'warn']} );
 
   // const viewsPath = join(__dirname, '../public/views');
   // app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
@@ -47,6 +49,15 @@ async function main() {
   app.use(passport.initialize());
   app.use(passport.session());
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  const options = new DocumentBuilder()
+    .setTitle('Community')
+    .setDescription('the community document of simplechain.com')
+    .setVersion('1.0.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  fs.writeFileSync("./swagger.json", JSON.stringify(document));
+  SwaggerModule.setup('api-docs', app, document);
   const port = normalizePort(process.env.PORT || '3000');
   await app.listen(port);
 }
