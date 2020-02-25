@@ -1,10 +1,12 @@
-import { Controller, Post, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Post, UseInterceptors, UploadedFiles, UseGuards } from '@nestjs/common';
 import * as Multer from 'multer'
 import { FilesInterceptor } from '@nestjs/platform-express';
 import * as path from "path";
+import { SessionGuard } from './auth/session-guard';
 
 @Controller()
 export class AppController {
+  @UseGuards(SessionGuard)
   @Post('/upload')
   @UseInterceptors(FilesInterceptor('files', 10,{
     storage: Multer.diskStorage({
