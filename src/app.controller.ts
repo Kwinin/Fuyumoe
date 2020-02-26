@@ -4,7 +4,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import * as path from "path";
 import { SessionGuard } from './auth/session-guard';
 
-@Controller()
+@Controller('/api')
 export class AppController {
   @UseGuards(SessionGuard)
   @Post('/upload')

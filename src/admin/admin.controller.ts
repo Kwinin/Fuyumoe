@@ -16,7 +16,7 @@ import { Response } from 'express';
 import { SessionGuard } from '../auth/session-guard';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('/app/admin')
+@Controller('/api/admin')
 @ApiTags('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}

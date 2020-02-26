@@ -16,7 +16,7 @@ import { SessionGuard } from '../auth/session-guard';
 import { Article } from './article.entity';
 import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@Controller('article')
+@Controller('/api/article')
 @ApiTags('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
