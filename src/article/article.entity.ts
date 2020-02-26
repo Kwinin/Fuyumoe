@@ -27,6 +27,10 @@ export class Article extends Model<Article> {
   @Column
   title: string
 
+  @ApiProperty({description:"文章缩略图"})
+  @Column
+  thumbnail: string
+
   @ApiProperty({description:"文章内容"})
   @Column({
     type: TEXT
