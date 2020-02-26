@@ -8,7 +8,11 @@ import { SessionGuard } from './auth/session-guard';
 export class AppController {
   @UseGuards(SessionGuard)
   @Post('/upload')
-  @UseInterceptors(FilesInterceptor('files', 10,{
+  @UseInterceptors(FilesInterceptor('files', 5,{
+    limits:{
+      fileSize: 1000*1000,
+      files: 5
+    },
     storage: Multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, path.join(__dirname, '../public/uploads'));

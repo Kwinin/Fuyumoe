@@ -14,7 +14,7 @@ import {
 import { AdminService } from './admin.service';
 import { Response } from 'express';
 import { SessionGuard } from '../auth/session-guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('/api/admin')
 @ApiTags('admin')

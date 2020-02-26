@@ -29,6 +29,15 @@ export class ArticleController {
 
   @UseGuards(SessionGuard)
   @Post('add')
+  @ApiBody({
+    schema: {
+      properties: {
+        title: {type: 'string', description: '标题'},
+        content: {type: 'string', description: '内容'},
+        thumbnail: {type: 'string', description: '缩略图'}
+      }
+    }
+  })
   add(@Request() req){
     return this.articleService.add({...req.body, adminId: req.session.admin.id})
   }
@@ -41,6 +50,7 @@ export class ArticleController {
 
   @UseGuards(SessionGuard)
   @Delete('del')
+  @ApiQuery({ name: 'id'})
   remove(@Query('id') id){
     return this.articleService.delById(id)
   }

@@ -31,7 +31,6 @@ export class Article extends Model<Article> {
   @Column
   thumbnail: string
 
-  @ApiProperty({description:"文章内容"})
   @Column({
     type: TEXT
   })
