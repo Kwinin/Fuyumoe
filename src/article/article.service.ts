@@ -19,6 +19,7 @@ export class ArticleService {
 
   async getListByPage(pageSize = 10, pageNumber = 1): Promise<{rows: Article[], count:number}> {
     const article = await this.articleRepository.findAndCountAll({
+      order: [['createdAt', 'DESC']],
       offset: Number((pageNumber - 1) * pageSize),
       limit: Number(pageSize),
       where: {

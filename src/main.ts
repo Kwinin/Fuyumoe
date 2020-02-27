@@ -9,6 +9,7 @@ import * as connectRedis from 'connect-redis'
 import { HttpExceptionFilter } from './common/filters/httpException';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as fs from 'fs';
+import { Logger } from '@nestjs/common';
 function normalizePort(val) {
   const port = parseInt(val, 10);
 
@@ -26,7 +27,7 @@ function normalizePort(val) {
 }
 
 async function main() {
-  const app = await NestFactory.create(AppModule, { logger: ['log', 'error', 'warn']} );
+  const app = await NestFactory.create(AppModule, { logger: new Logger()} );
 
   // const viewsPath = join(__dirname, '../public/views');
   // app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
