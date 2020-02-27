@@ -57,6 +57,17 @@ export class ArticleController {
 
   @UseGuards(SessionGuard)
   @Patch('update')
+  @ApiBody({
+    schema: {
+      required: ['id'],
+      properties: {
+        id: {type: 'number', description: '文章Id'},
+        title: {type: 'string', description: '标题'},
+        content: {type: 'string', description: '内容'},
+        thumbnail: {type: 'string', description: '缩略图'}
+      }
+    }
+  })
   update(@Body() data){
     return this.articleService.updateById(data)
   }
