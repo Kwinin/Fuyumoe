@@ -31,6 +31,7 @@ export class ArticleController {
   @Post('add')
   @ApiBody({
     schema: {
+      required: ['title', 'content', 'thumbnail'],
       properties: {
         title: {type: 'string', description: '标题'},
         content: {type: 'string', description: '内容'},

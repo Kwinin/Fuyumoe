@@ -48,9 +48,11 @@ export class ArticleService {
   }
 
   async updateById(data: Partial<Article>){
-    const title = await this.articleRepository.findOne({where: {title: data.title}})
-    if(title) {
-      throw new ApiException('The current title already exists', ApiErrorCode.ARTICLE_TITLE_EXIST, HttpStatus.BAD_REQUEST);
+    if(data.title){
+      const title = await this.articleRepository.findOne({where: {title: data.title}})
+      if(title) {
+        throw new ApiException('The current title already exists', ApiErrorCode.ARTICLE_TITLE_EXIST, HttpStatus.BAD_REQUEST);
+      }
     }
     await this.articleRepository.update({...data}, {where: {id: data.id}})
     return this.articleRepository.findByPk(data.id)
