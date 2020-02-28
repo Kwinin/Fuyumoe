@@ -9,9 +9,11 @@ export class ArticleService {
   constructor(@Inject('ARTICLE_REPOSITORY') private readonly articleRepository: typeof Article) {}
 
   async add(data: Partial<Article>): Promise<Partial<Article>>{
-    const title = await this.articleRepository.findOne({where: {title: data.title}})
-    if(title) {
-      throw new ApiException('The current title already exists', ApiErrorCode.ARTICLE_TITLE_EXIST, HttpStatus.BAD_REQUEST);
+    if(data.title) {
+      const title = await this.articleRepository.findOne({where: {title: data.title, enableType: EnumEnableType.enable}})
+      if(title) {
+        throw new ApiException('The current title already exists', ApiErrorCode.ARTICLE_TITLE_EXIST, HttpStatus.BAD_REQUEST);
+      }
     }
     return this.articleRepository.create(data)
   }
@@ -49,7 +51,7 @@ export class ArticleService {
 
   async updateById(data: Partial<Article>){
     if(data.title){
-      const title = await this.articleRepository.findOne({where: {title: data.title}})
+      const title = await this.articleRepository.findOne({where: {title: data.title, enableType: EnumEnableType.enable}})
       if(title) {
         throw new ApiException('The current title already exists', ApiErrorCode.ARTICLE_TITLE_EXIST, HttpStatus.BAD_REQUEST);
       }
