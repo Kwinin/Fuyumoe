@@ -2,7 +2,7 @@ import { Logger } from '../../helper/logger';
 
 export function logger(req, res, next) {
   const statusCode = res.statusCode
-  const logFormat = `${req.method} ${req.originalUrl} ip: ${req.ip} statusCode: ${statusCode}, body: ${JSON.stringify(req.body)}`
+  const logFormat = `${req.method} ${req.originalUrl} ip: ${req.ip} statusCode: ${statusCode}}`
 
   next()
   if (statusCode >= 500) {

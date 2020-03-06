@@ -66,7 +66,7 @@ async function main() {
   app.use(passport.initialize());
   app.use(passport.session());
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalInterceptors(new TransformInterceptor())
+  // app.useGlobalInterceptors(new TransformInterceptor())
 
   app.use(logger)
 
