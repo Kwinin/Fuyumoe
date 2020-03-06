@@ -1,0 +1,15 @@
+import { Logger } from '../../helper/logger';
+
+export function logger(req, res, next) {
+  const statusCode = res.statusCode
+  const logFormat = `${req.method} ${req.originalUrl} ip: ${req.ip} statusCode: ${statusCode}, body: ${JSON.stringify(req.body)}`
+
+  next()
+  if (statusCode >= 500) {
+    Logger.error(logFormat)
+  } else if (statusCode >= 400) {
+    Logger.warn(logFormat)
+  } else {
+    Logger.log(logFormat)
+  }
+}

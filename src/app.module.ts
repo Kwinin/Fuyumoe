@@ -24,7 +24,8 @@ import { AuthService } from './auth/auth-service';
     CookieSerializer,
     SessionGuard,
     LocalStrategy,
-    SessionStore,],
+    SessionStore,
+  ],
 })
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore

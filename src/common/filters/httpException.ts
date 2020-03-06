@@ -1,6 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, UnauthorizedException } from '@nestjs/common';
 import { ApiException } from '../exceptions/api.exception';
 import { ApiErrorCode } from '../enums/error_code';
+import { Logger } from '../../helper/logger';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -11,6 +12,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus()
     switch (true) {
       case exception instanceof ApiException:
+        Logger.warn('ApiException', JSON.stringify(exception))
         response
           .status(status)
           .json({
@@ -21,6 +23,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           });
         break
       case exception.response.error === 'Forbidden':
+        Logger.warn('Forbidden', JSON.stringify(exception))
         response
           .status(400)
           .json({
@@ -31,6 +34,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
           });
         break
       default:
+        Logger.error('Exception', JSON.stringify(exception))
         response
           .status(status)
           .json({

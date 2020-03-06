@@ -5,7 +5,7 @@ import * as path from "path";
 import { SessionGuard } from './auth/session-guard';
 import { ApiBody } from '@nestjs/swagger';
 
-@Controller('/api')
+@Controller()
 export class AppController {
   @UseGuards(SessionGuard)
   @Post('/upload')
