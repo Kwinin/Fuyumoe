@@ -1,0 +1,45 @@
+{
+  "mysql": {
+    "username": "root",
+    "password": "123456",
+    "dialect": "mysql",
+    "host": "192.168.3.70",
+    "timezone": "+08:00",
+    "database": "community",
+    "define": {
+      "engine": "innodb",
+      "charset": "utf8",
+      "collate": "utf8_bin"
+    },
+    "connectionTimeout":0,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "idle": 20000,
+      "acquire": 20000
+    },
+    "isolationLevel": "READ UNCOMMITTED",
+    "logging": false
+  },
+  "redis": {
+    "host": "192.168.3.112",
+    "port": 6379,
+    "password": "shuqinkeji",
+    "prefix": "community:session:",
+    "ttl": 3600
+  },
+  "rabbitmq": {
+    "username": "",
+    "password": "",
+    "hostname": "localhost"
+  },
+  "session": {
+    "secret": "T*DJF&%^&45GJE#HHI*BJ90",
+    "key": "community-auth",
+    "resave": true,
+    "saveUninitialized": true,
+    "cookie": {
+      "domain": null
+    }
+  }
+}

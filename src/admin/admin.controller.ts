@@ -14,12 +14,23 @@ import {
 import { AdminService } from './admin.service';
 import { Response } from 'express';
 import { SessionGuard } from '../auth/session-guard';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
-@Controller('admin')
+@Controller('/admin')
+@ApiTags('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Post('/login')
+  @ApiBody({
+    schema: {
+      required: ['account', 'password'],
+      properties: {
+        account: {type: 'string', description: '账户'},
+        password: {type: 'string', description: '账户'},
+      }
+    }
+  })
   async login(@Request() req): Promise<any> {
     const userInfo = await this.adminService.login(req.body.account, req.body.password);
     Object.assign(req.session, {admin: await this.adminService.generateSession(userInfo.id)})
